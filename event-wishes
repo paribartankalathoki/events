@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Wish for you</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #0d1b2a;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+      cursor: url('https://cdn.iconscout.com/icon/free/png-256/fireworks-2194376-1830811.png'), auto; /* Custom cursor */
+    }
+
+    /* Fullscreen container */
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 20px;
+    }
+
+    /* Celebratory Heading Text */
+    .celebrate-text {
+      font-size: 4rem;
+      font-weight: bold;
+      color: gold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      animation: fadeIn 3s ease-out;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .celebrate-text:hover {
+      transform: scale(1.1);
+      color: #ffcc00; /* Hover effect: Gold glow */
+    }
+
+    /* Subheading */
+    .sub-text {
+      font-size: 1.5rem;
+      color: #f0f0f0;
+      margin-top: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .sub-text:hover {
+      transform: scale(1.1);
+      color: #f2c94c; /* Hover effect: Subtle gold */
+    }
+
+    /* Countdown */
+    .countdown-container {
+      font-size: 2.5rem;
+      color: #f2c94c;
+      font-weight: bold;
+      text-transform: uppercase;
+      animation: pulse 1.5s infinite ease-in-out;
+      transition: transform 0.3s ease;
+    }
+
+    .countdown-container:hover {
+      transform: scale(1.1);
+      color: #f39c12;
+    }
+
+    /* Footer */
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 1rem;
+      color: #ccc;
+      transition: color 0.3s ease;
+    }
+
+    footer:hover {
+      color: #f2c94c;
+    }
+
+    /* Fireworks animation container (placeholder for actual fireworks) */
+    .fireworks-container {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      width: 100%;
+      height: 50%;
+      pointer-events: none;
+    }
+
+    /* Fireworks (simple burst) */
+    @keyframes fireworks {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(5);
+        opacity: 0;
+      }
+    }
+
+    .firework {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ff6b6b;
+      border-radius: 50%;
+      animation: fireworks 1s ease-out infinite;
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    .fireworks-container .firework {
+      top: 50%;
+      left: 50%;
+    }
+
+    /* Animation effects */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* For mobile devices */
+    @media screen and (max-width: 768px) {
+      .celebrate-text {
+        font-size: 3rem;
+      }
+
+      .sub-text {
+        font-size: 1.2rem;
+      }
+
+      .countdown-container {
+        font-size: 2rem;
+      }
+
+      footer {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* For large screens */
+    @media screen and (min-width: 1200px) {
+      .celebrate-text {
+        font-size: 5rem;
+      }
+
+      .sub-text {
+        font-size: 1.8rem;
+      }
+
+      .countdown-container {
+        font-size: 3rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1 class="celebrate-text">Welcome to 2025!</h1>
+    <p class="sub-text">Let's Countdown to New Year's Eve!</p>
+  </header>
+
+  <section class="countdown-container">
+    <div id="countdown"></div>
+  </section>
+
+  <section class="fireworks-container">
+    <!-- Fireworks animation can be rendered here using CSS or JavaScript -->
+  </section>
+
+  <footer>
+    <p>Made with ❤️ for the New Year 2025</p>
+  </footer>
+</div>
+
+<script>
+  // Countdown Timer Logic
+  const countdownElement = document.getElementById("countdown");
+
+  // Set New Year's Eve (2025) Date
+  const newYearDate = new Date("January 1, 2025 00:00:00").getTime();
+
+  // Update the countdown every second
+  const countdownInterval = setInterval(function() {
+    let now = new Date().getTime();
+    let timeLeft = newYearDate - now;
+
+    // Calculate the time left
+    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    // Display the result
+    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    // If countdown is finished
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      countdownElement.innerHTML = "Happy New Year 2025!";
+    }
+  }, 1000);
+
+  // Generate Fireworks
+  function createFireworks() {
+    const container = document.querySelector(".fireworks-container");
+
+    for (let i = 0; i < 30; i++) {
+      const firework = document.createElement("div");
+      firework.classList.add("firework");
+      firework.style.setProperty("--i", i);
+      container.appendChild(firework);
+
+      // Randomly position each firework
+      firework.style.top = `${Math.random() * 100}%`;
+      firework.style.left = `${Math.random() * 100}%`;
+
+      // Remove firework after animation
+      setTimeout(() => {
+        firework.remove();
+      }, 1000);
+    }
+  }
+
+  setInterval(createFireworks, 1000);
+</script>
+</body>
+</html>
